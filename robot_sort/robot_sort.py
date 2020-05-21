@@ -92,12 +92,47 @@ class SortingRobot:
         """
         return self._light == "ON"
 
+    # My idea for this sort is based on the idea of insertion sort, but instead of inserting the robot can swap items. 
+
     def sort(self):
         """
         Sort the robot's list.
         """
-        # Fill this out
-        pass
+        #defining on and off light states
+        self.set_light_off()
+        while not self.light_is_on():
+            self.set_light_on()
+            self.light_is_on()
+            # when the robot can move right it will swap its item and move right
+            while self.can_move_right():
+                self.swap_item()
+                self.move_right()
+                #then the robot will compare the next item and decide to swap if it is a larger value
+                if self.compare_item() == 1:
+                    self.swap_item()
+                    self.set_light_off()
+                    self.light_is_on()
+
+                self.move_left()
+                self.swap_item()
+                self.move_right()
+
+            while self.can_move_left():
+                self.swap_item()
+                self.move_left()
+
+                if self.compare_item() == -1:
+                    self.swap_item()
+                    self.set_light_off()
+                    self.light_is_on()
+
+                self.move_right()
+                self.swap_item()
+                self.move_left()
+
+        return self
+ 
+
 
 
 if __name__ == "__main__":
